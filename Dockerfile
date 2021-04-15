@@ -6,7 +6,7 @@ RUN gradle build --no-daemon
 FROM openjdk:11-jdk-slim-buster
 EXPOSE 8080
 RUN mkdir /app
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/app.jar
+COPY --from=build /home/gradle/src/build/libs/*.jar /app.jar
 
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
