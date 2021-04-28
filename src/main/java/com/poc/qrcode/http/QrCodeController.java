@@ -1,33 +1,33 @@
 package com.poc.qrcode.http;
 
 import com.google.zxing.WriterException;
-import com.poc.qrcode.usecase.QrCodeBase64UseCase;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.poc.qrcode.usecase.MultipleQrCodeUseCase;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/qrCode")
+@RequestMapping("/qrcode")
 public class QrCodeController {
-    public static final Map<String, String[]> codigosPorUsuaros = new HashMap<>();
 
-    @Autowired
-    private QrCodeBase64UseCase qrCodeBase64UseCase;
+    private final MultipleQrCodeUseCase multipleQrCodeUseCase;
 
-    @GetMapping("gerar/{usuario}")
-    public ModelAndView generate(@PathVariable("usuario") String usuario, @RequestParam(value = "time", required = false, defaultValue = "500") Integer time) throws IOException, WriterException {
-        return new ModelAndView("index").addObject("qrCodes", qrCodeBase64UseCase.gerarQrCodeBase64ParaUsuario(usuario, time));
+    public QrCodeController(MultipleQrCodeUseCase multipleQrCodeUseCase) {
+        this.multipleQrCodeUseCase = multipleQrCodeUseCase;
     }
 
-    @GetMapping("validar/{usuario}")
-    public boolean validarQrCode(@PathVariable("usuario") String usuario,
-                                 @RequestParam("codigo1") String codigo1,
-                                 @RequestParam("codigo2") String codigo2,
-                                 @RequestParam("codigo3") String codigo3) {
-        return qrCodeBase64UseCase.validarCodigosUsuario(usuario, codigo1, codigo2, codigo3);
+    @GetMapping("generate/{user}")
+    public ModelAndView generate(@PathVariable("user") String user,
+                                 @RequestParam(value = "size", required = false, defaultValue = "3") Integer size,
+                                 @RequestParam(value = "time", required = false, defaultValue = "500") Integer time) throws IOException, WriterException {
+        var qrcode = multipleQrCodeUseCase.generate(user, size, time);
+        return new ModelAndView("index").addObject("qrCodes", qrcode);
+    }
+
+    @GetMapping("validate/{user}")
+    public boolean validarQrCode(@PathVariable("user") String user,
+                                 @RequestParam("codes") String[] codes) {
+        return multipleQrCodeUseCase.validate(user, codes);
     }
 }

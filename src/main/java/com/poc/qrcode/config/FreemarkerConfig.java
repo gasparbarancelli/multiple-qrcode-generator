@@ -16,8 +16,7 @@ public class FreemarkerConfig implements BeanPostProcessor, WebMvcConfigurer {
                 .addResourceLocations(
                         "classpath:/META-INF/resources/",
                         "classpath:/resources/",
-                        "classpath:/static/",
-                        "/webjars/"
+                        "classpath:/static/"
                 );
     }
 

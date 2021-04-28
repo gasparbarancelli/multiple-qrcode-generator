@@ -1,4 +1,4 @@
-package com.poc.qrcode.usecase;
+package com.poc.qrcode.util;
 
 import javax.imageio.*;
 import javax.imageio.metadata.IIOInvalidTreeException;

@@ -1,11 +1,10 @@
 <html>
 <head>
-    <title>FreeMarker and Spring Boot</title>
-    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <title>Multiple QrCodes</title>
 </head>
 <body>
 <div>
-    <img src="data:image/gif;base64,${qrCodes}" alt="qrCode"/>
+    <img src="data:image/gif;base64,${qrCodes}" alt="qrCodes"/>
 </div>
 </body>
 </html>
