@@ -26,7 +26,7 @@ public class QrCodeController {
     }
 
     @GetMapping("validate/{user}")
-    public boolean validarQrCode(@PathVariable("user") String user,
+    public boolean validate(@PathVariable("user") String user,
                                  @RequestParam("codes") String[] codes) {
         return multipleQrCodeUseCase.validate(user, codes);
     }
